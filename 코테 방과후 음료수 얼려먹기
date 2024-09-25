@@ -1,0 +1,33 @@
+# 음료수 얼려먹기
+
+**입력으로 주어지는 것**: n x m 크기의 2차원 배열(그래프)이 주어집니다. 배열에는 0과 1로 이루어진 값이 있습니다.
+
+0: 물이 들어갈 수 있는 부분 (얼음을 얼릴 수 있는 공간).
+
+1: 벽이 있는 부분 (물이 들어가지 않는 공간).
+
+이 2차원 배열에서, 상하좌우로 연결된 모든 0들을 하나의 덩어리(구역)로 보고, 몇 개의 덩어리로 나뉘어 있는지 구하는 문제입니다. 각 덩어리는 물이 들어갈 수 있는 하나의 공간을 의미합니다.
+x, y = map(int, input().split())#입력
+li = []
+cnt = 0
+for i in range(x):
+    li.append(list(map(int, input())))#리스트 입력
+def dfs(a, b):#dfs함수
+    if a < 0 or a >= x or b < 0 or b >= y:#재귀 돌려서 나가면 끝
+        return 0
+    if li[a][b] == 0:#0이면 1로 변경하면서 각방향으로 재귀 실행
+        li[a][b] = 1
+        dfs(a + 1, b)
+        dfs(a - 1, b)
+        dfs(a, b + 1)
+        dfs(a, b - 1)
+        return 1
+    return 0
+
+
+for i in range(x):
+    for j in range(y):
+        if dfs(i, j) == 1:#이중 for문으로 dfs함수 실행
+            cnt += 1
+
+print(cnt)#출력
